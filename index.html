@@ -1,62 +1,709 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ku" dir="rtl">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="VARO - یاریدەدەری زیرەکی کوردی">
-<title>VARO | یاریدەدەری زیرەکی کوردی</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VARO Manager</title>
+
+  <meta name="description"
+        content="VARO Manager - ئەپی زیرەکی بۆ بەڕێوەبردنی پارە">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: #050807;
+      color: #ffffff;
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 8, 7, 0.90);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 16px 25px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 25px;
+      font-weight: bold;
+      color: #4ade80;
+    }
+
+    .logo-icon {
+      width: 43px;
+      height: 43px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 14px;
+
+      background: linear-gradient(
+        135deg,
+        #22c55e,
+        #06b6d4
+      );
+
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      color: #d1d5db;
+    }
+
+    .nav-links a {
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #4ade80;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 88vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 80px 20px;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(34,197,94,0.20),
+          transparent 40%
+        );
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    .badge {
+      display: inline-block;
+
+      padding: 7px 18px;
+      margin-bottom: 25px;
+
+      border-radius: 50px;
+
+      color: #86efac;
+
+      background: rgba(34,197,94,0.10);
+
+      border: 1px solid rgba(74,222,128,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(55px, 9vw, 100px);
+      line-height: 1;
+
+      margin-bottom: 20px;
+
+      background: linear-gradient(
+        135deg,
+        #ffffff,
+        #4ade80,
+        #22d3ee
+      );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h2 {
+      font-size: clamp(22px, 4vw, 35px);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+
+      color: #9ca3af;
+      font-size: 18px;
+    }
+
+    /* BUTTONS */
+
+    .buttons {
+      margin-top: 35px;
+
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 15px 30px;
+
+      border-radius: 15px;
+
+      background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+      );
+
+      color: #031007;
+
+      font-weight: bold;
+      font-size: 17px;
+
+      transition: 0.25s;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 15px 40px rgba(34,197,94,0.25);
+    }
+
+    .github-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 15px 30px;
+
+      border-radius: 15px;
+
+      border: 1px solid rgba(255,255,255,0.12);
+
+      background: rgba(255,255,255,0.05);
+
+      transition: 0.25s;
+    }
+
+    .github-btn:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.10);
+    }
+
+    /* FEATURES */
+
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 90px 25px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #9ca3af;
+      margin-bottom: 50px;
+    }
+
+    .features {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(230px, 1fr)
+        );
+
+      gap: 20px;
+    }
+
+    .card {
+      padding: 30px;
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.07),
+          rgba(255,255,255,0.025)
+        );
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+
+      border-color:
+        rgba(74,222,128,0.35);
+    }
+
+    .card-icon {
+      width: 58px;
+      height: 58px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 17px;
+
+      background: rgba(34,197,94,0.12);
+
+      font-size: 28px;
+
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #9ca3af;
+    }
+
+    /* DOWNLOAD SECTION */
+
+    .download-section {
+      padding: 100px 25px;
+
+      text-align: center;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(34,197,94,0.13),
+          transparent 55%
+        );
+    }
+
+    .download-box {
+      max-width: 760px;
+
+      margin: auto;
+
+      padding: 60px 30px;
+
+      border-radius: 30px;
+
+      background: rgba(255,255,255,0.035);
+
+      border:
+        1px solid rgba(74,222,128,0.16);
+    }
+
+    .download-box h2 {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .download-box p {
+      color: #9ca3af;
+      margin-bottom: 30px;
+    }
+
+    .version {
+      margin-top: 18px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 35px 20px;
+
+      text-align: center;
+
+      border-top:
+        1px solid rgba(255,255,255,0.08);
+
+      color: #6b7280;
+    }
+
+    footer strong {
+      color: #4ade80;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: 80vh;
+        padding: 60px 20px;
+      }
+
+      .hero h1 {
+        font-size: 65px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section {
+        padding: 65px 20px;
+      }
+
+      .section-title {
+        font-size: 30px;
+      }
+
+      .download-box h2 {
+        font-size: 30px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .download-btn,
+      .github-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="nav">
-  <a class="brand" href="#home"><span class="logo">V</span><b>VARO</b></a>
-  <nav><a href="#features">تایبەتمەندییەکان</a><a href="#about">دەربارە</a><a href="#download">دابەزاندن</a></nav>
-  <a class="btn" href="#download">دابەزاندن</a>
-</header>
 
-<main id="home">
-<section class="hero">
-  <div>
-    <span class="badge">🤖 زیرەکی دەستکردی کوردی</span>
-    <h1>VARO<br><span>لەگەڵ تۆ، هەموو کات.</span></h1>
-    <p>یاریدەدەری زیرەکی کوردی بۆ یارمەتیدان، زانیاری و بەڕێوەبردنی کارەکانت.</p>
-    <div class="actions"><a class="btn" href="#download">⬇ دابەزاندنی VARO</a><a class="ghost" href="#features">تایبەتمەندییەکان</a></div>
-    <small>بۆ Android · بەخۆڕایی</small>
-  </div>
-  <div class="phone-wrap">
-    <div class="phone">
-      <div class="notch"></div>
-      <div class="appicon">V</div>
-      <h3>سڵاو! من VARO ـم 👋</h3>
-      <p>چۆن دەتوانم یارمەتیت بدەم؟</p>
-      <div class="chat">پرسیارێکت هەیە؟ لێم بپرسە...</div>
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <div class="nav-container">
+
+      <a href="#" class="logo">
+
+        <span class="logo-icon">
+          V
+        </span>
+
+        VARO
+
+      </a>
+
+      <div class="nav-links">
+
+        <a href="#home">
+          سەرەتا
+        </a>
+
+        <a href="#features">
+          تایبەتمەندییەکان
+        </a>
+
+        <a href="#download">
+          دابەزاندن
+        </a>
+
+      </div>
+
     </div>
-  </div>
-</section>
 
-<section id="features" class="section">
-  <div class="title"><span>تایبەتمەندییەکان</span><h2>VARO بۆ کارەکانی ڕۆژانەت</h2></div>
-  <div class="grid">
-    <article><i>🧠</i><h3>یاریدەدەری زیرەک</h3><p>یارمەتی لە وەڵامدانەوە و کارە جۆراوجۆرەکان.</p></article>
-    <article><i>🗣️</i><h3>زمانی کوردی</h3><p>ڕووکاری گونجاو بۆ بەکارهێنەری کورد.</p></article>
-    <article><i>⚡</i><h3>خێرا و سادە</h3><p>ڕووکاری پاک و بەکارهێنانی ئاسان.</p></article>
-    <article><i>📱</i><h3>بۆ Android</h3><p>لەسەر مۆبایلەکەت بە ئاسانی بەکاری بهێنە.</p></article>
-  </div>
-</section>
+  </nav>
 
-<section id="about" class="about">
-  <div><span>دەربارەی VARO</span><h2>تەکنەلۆژیا بە زمانی خۆمان</h2><p>VARO پرۆژەیەکی زیرەکی دەستکردە کە ئامانجی ئەوەیە بە شێوەیەکی سادە و جوان یارمەتی بە بەکارهێنەر بدات.</p></div>
-  <blockquote>« زیرەکی، کاتێک جوانە کە بۆ خەڵک ئاسانتر بێت. »</blockquote>
-</section>
 
-<section id="download" class="download">
-  <div class="download-box">
-    <div class="download-logo">V</div>
-    <div><span>ئامادەیت؟</span><h2>VARO دابەزێنە</h2><p>فایلی APK دابەزێنە و VARO لەسەر Android ـەکەت دامەزرێنە.</p></div>
-    <a class="btn big" href="app-release.apk" download>⬇ دابەزاندنی APK</a>
-  </div>
-</section>
-</main>
+  <!-- HERO -->
 
-<footer><div class="brand"><span class="logo">V</span><b>VARO</b></div><span>© 2026 VARO · یاریدەدەری زیرەکی کوردی</span></footer>
-</body></html>
+  <section
+    class="hero"
+    id="home"
+  >
+
+    <div class="hero-content">
+
+      <div class="badge">
+        🚀 VARO Manager
+      </div>
+
+      <h1>
+        VARO
+      </h1>
+
+      <h2>
+        بەڕێوەبردنی پارە بە شێوەیەکی زیرەک
+      </h2>
+
+      <p>
+        VARO یارمەتیت دەدات داهات،
+        خەرجی و قەرزەکانت بە
+        شێوەیەکی ئاسان و ڕێکخراو
+        بەڕێوە ببەیت.
+      </p>
+
+
+      <div class="buttons">
+
+        <!-- DOWNLOAD APK -->
+
+        <a
+          href="https://github.com/varo773/varo-manager/releases/download/v1.0.0/varomanager.apk"
+          class="download-btn"
+          download="varomanager.apk"
+        >
+          📱 دابەزاندنی VARO
+        </a>
+
+
+        <!-- GITHUB -->
+
+        <a
+          href="https://github.com/varo773/varo-manager"
+          class="github-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+
+  <section
+    class="section"
+    id="features"
+  >
+
+    <h2 class="section-title">
+      تایبەتمەندییەکان
+    </h2>
+
+    <p class="section-subtitle">
+      هەموو شتێک لە یەک ئەپدا
+    </p>
+
+
+    <div class="features">
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          💰
+        </div>
+
+        <h3>
+          داهات
+        </h3>
+
+        <p>
+          داهاتەکانت تۆمار و
+          بە ئاسانی بەڕێوەیان ببە.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🛒
+        </div>
+
+        <h3>
+          خەرجی
+        </h3>
+
+        <p>
+          خەرجییەکانت تۆمار بکە
+          و چاودێری پارەکەت بکە.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🤝
+        </div>
+
+        <h3>
+          قەرز
+        </h3>
+
+        <p>
+          قەرزەکانت ڕێکبخە و
+          بڕی قەرزی ماوە ببینە.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          📊
+        </div>
+
+        <h3>
+          ڕاپۆرت
+        </h3>
+
+        <p>
+          پوختەی داهات و خەرجییەکانت
+          لە یەک شوێن ببینە.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🔐
+        </div>
+
+        <h3>
+          Login
+        </h3>
+
+        <p>
+          هەژماری تایبەتی خۆت
+          بە ئاسانی بەکاربهێنە.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🌙
+        </div>
+
+        <h3>
+          Dark Mode
+        </h3>
+
+        <p>
+          ڕووکاری تاریک بۆ
+          ئەزموونی خۆشتر.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DOWNLOAD -->
+
+  <section
+    class="download-section"
+    id="download"
+  >
+
+    <div class="download-box">
+
+      <h2>
+        VARO دابەزێنە 🚀
+      </h2>
+
+      <p>
+        وەشانی نوێی VARO Manager
+        دابەزێنە و بەڕێوەبردنی
+        پارەکەت ئاسانتر بکە.
+      </p>
+
+
+      <a
+        href="https://github.com/varo773/varo-manager/releases/download/v1.0.0/varomanager.apk"
+        class="download-btn"
+        download="varomanager.apk"
+      >
+        ⬇️ Download VARO APK
+      </a>
+
+
+      <div class="version">
+        VARO Manager — v1.0.0
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <p>
+      © 2026
+      <strong>VARO</strong>
+      — هەموو مافەکان پارێزراون.
+    </p>
+
+  </footer>
+
+</body>
+
+</html>
